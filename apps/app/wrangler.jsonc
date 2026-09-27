@@ -1,8 +1,11 @@
-// Worker do Cloudflare para este app, montado pelo OpenNext.
-// O dominio e ligado no painel: Workers > achilles-imoveis-gestao > Settings > Domains & Routes.
+// Worker do Cloudflare para o painel de gestao, montado pelo OpenNext.
+//
+// Sem "name" de proposito: no Workers Builds (deploy pelo GitHub) o nome
+// do Worker vem do nome do projeto criado no painel. Fixar um nome aqui
+// que nao batesse com o do projeto fazia o deploy falhar. O dominio e
+// ligado no painel: Workers > (seu projeto) > Settings > Domains & Routes.
 {
   "$schema": "../../node_modules/wrangler/config-schema.json",
-  "name": "achilles-imoveis-gestao",
   "main": ".open-next/worker.js",
   "compatibility_date": "2025-09-27",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
@@ -14,12 +17,6 @@
   "images": {
     "binding": "IMAGES"
   },
-  "services": [
-    {
-      "binding": "WORKER_SELF_REFERENCE",
-      "service": "achilles-imoveis-gestao"
-    }
-  ],
   "observability": {
     "enabled": true
   }

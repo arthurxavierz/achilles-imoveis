@@ -24,14 +24,21 @@ campos: nome, diretório e comando.
 
    | Campo | Site | Painel |
    | --- | --- | --- |
-   | **Worker name** | `achilles-imoveis-site` | `achilles-imoveis-gestao` |
-   | **Root directory** | `apps/site` | `apps/app` |
+   | **Project name** | `achilles-imoveis-site` | `achilles-imoveis-gestao` |
+   | **Path** (em *Advanced settings*) | `apps/site` | `apps/app` |
    | **Build command** | `npm install && npx opennextjs-cloudflare build` | igual |
    | **Deploy command** | `npx opennextjs-cloudflare deploy` | igual |
 
-   > O `npm install` roda no **root directory**. Como os apps são workspaces do
-   > npm, ele sobe para a raiz sozinho e resolve `@imob/core`, `@imob/db` e
-   > `@imob/demo`. Não aponte o root para a raiz do repositório.
+   > O **Project name** vira o nome do Worker e aparece no subdomínio
+   > `*.workers.dev`. Os `wrangler.jsonc` não fixam nome de propósito: quem
+   > manda é o nome do projeto. São dois projetos separados, então precisam
+   > de nomes diferentes.
+   >
+   > O **Path** é o "root directory": a pasta de onde os comandos rodam.
+   > É obrigatório apontar para `apps/site` ou `apps/app` — deixá-lo em `/`
+   > faz o build rodar na raiz e falhar. O `npm install` roda nessa pasta,
+   > sobe para a raiz sozinho (workspaces) e resolve `@imob/core`, `@imob/db`
+   > e `@imob/demo`.
 
 4. **Save and Deploy.** O primeiro build leva alguns minutos. A cada `git push`
    na branch `main`, os dois Workers reconstroem sozinhos.
@@ -89,8 +96,9 @@ Se preferir publicar direto do computador, sem a integração com o GitHub:
 
 ```bash
 npm install
-npm run cf:deploy:site     # faz o build e sobe o Worker do site
-npm run cf:deploy:app      # faz o build e sobe o Worker do painel
+# Os wrangler.jsonc não fixam nome, então passe o nome do Worker aqui:
+npm run cf:build:site && npx wrangler deploy --name achilles-imoveis-site  --cwd apps/site
+npm run cf:build:app  && npx wrangler deploy --name achilles-imoveis-gestao --cwd apps/app
 ```
 
 Na primeira vez o `wrangler` abre o navegador para você autorizar a conta.
