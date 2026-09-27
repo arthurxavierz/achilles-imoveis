@@ -1,4 +1,5 @@
-/** @type {import('next').NextConfig} */
+import fs from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 // O host do Supabase entra na lista de origens permitidas do next/image.
 // Sem isto, o Next recusa otimizar as fotos dos imoveis.
@@ -10,8 +11,29 @@ const hostSupabase = (() => {
   }
 })();
 
+/**
+ * A foto de abertura da home, descoberta no build.
+ *
+ * A checagem era feita a cada requisicao com fs.existsSync, e no
+ * Cloudflare Workers nao ha disco: o arquivo nunca era achado e a home
+ * caia no skyline desenhado em CSS. No build o disco existe, entao a
+ * resposta e calculada aqui e embutida no codigo. Uma
+ * NEXT_PUBLIC_HERO_IMAGEM definida no ambiente continua tendo prioridade.
+ */
+const heroImagem = (() => {
+  if (process.env.NEXT_PUBLIC_HERO_IMAGEM) return process.env.NEXT_PUBLIC_HERO_IMAGEM;
+  const pasta = fileURLToPath(new URL('../../assets/site/', import.meta.url));
+  const extensao = ['jpg', 'jpeg', 'webp', 'avif', 'png'].find((e) => fs.existsSync(`${pasta}hero.${e}`));
+  return extensao ? `/assets/site/hero.${extensao}` : '';
+})();
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  env: {
+    NEXT_PUBLIC_HERO_IMAGEM: heroImagem,
+  },
 
   // Os pacotes do monorepo sao TypeScript puro, sem passo de build proprio.
   // O Next compila junto com o site.

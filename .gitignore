@@ -47,3 +47,7 @@ apps/*/public/assets/
 # Cache incremental do TypeScript. É artefato de máquina: muda a cada
 # compilação e gera conflito em toda troca de branch.
 *.tsbuildinfo
+
+# Cloudflare (OpenNext e wrangler). Gerados a cada build.
+.open-next
+.wrangler

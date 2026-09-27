@@ -1,0 +1,26 @@
+// Worker do Cloudflare para este app, montado pelo OpenNext.
+// O dominio e ligado no painel: Workers > achilles-imoveis-gestao > Settings > Domains & Routes.
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "achilles-imoveis-gestao",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2025-09-27",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  // Otimizacao das fotos do next/image via Cloudflare Images.
+  "images": {
+    "binding": "IMAGES"
+  },
+  "services": [
+    {
+      "binding": "WORKER_SELF_REFERENCE",
+      "service": "achilles-imoveis-gestao"
+    }
+  ],
+  "observability": {
+    "enabled": true
+  }
+}

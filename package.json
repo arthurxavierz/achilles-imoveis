@@ -15,7 +15,11 @@
     "typecheck": "npm run typecheck --workspaces --if-present",
     "lint": "npm run lint --workspaces --if-present",
     "db:types": "supabase gen types typescript --linked > packages/db/src/database.types.ts",
-    "assets": "node scripts/sincronizar-assets.mjs"
+    "assets": "node scripts/sincronizar-assets.mjs",
+    "cf:build:site": "npm run cf:build --workspace @imob/site",
+    "cf:deploy:site": "npm run cf:deploy --workspace @imob/site",
+    "cf:build:app": "npm run cf:build --workspace @imob/app",
+    "cf:deploy:app": "npm run cf:deploy --workspace @imob/app"
   },
   "engines": {
     "node": ">=22"
