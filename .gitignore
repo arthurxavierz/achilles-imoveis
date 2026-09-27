@@ -1,0 +1,49 @@
+# Dependencias
+node_modules
+
+# Builds
+dist
+.next
+out
+.turbo
+
+# Variaveis de ambiente. NUNCA suba estes arquivos para o GitHub.
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Netlify
+.netlify
+
+# Supabase CLI
+supabase/.temp
+supabase/.branches
+
+# Editores e sistema
+.DS_Store
+Thumbs.db
+*.log
+.vscode/*
+!.vscode/extensions.json
+
+# Dados da demonstração local (recriados automaticamente)
+.achilles-demo/
+
+# Cópia de assets/, refeita a cada dev e build. A fonte é a pasta
+# assets/ na raiz; versionar a cópia geraria conflito a cada troca de logo.
+apps/*/public/assets/
+
+# Exportações do Kenlo e planilhas de carteira.
+# São dados reais de cliente: endereço, preço e nome de captador de
+# imóveis de verdade. Não entram no repositório — se um dia ele virar
+# público, isso fica indexável. Guarde os arquivos fora do projeto ou
+# numa pasta que o Git não enxergue.
+*.xls
+*.xlsx
+*.csv
+/xmls*.txt
+
+# Cache incremental do TypeScript. É artefato de máquina: muda a cada
+# compilação e gera conflito em toda troca de branch.
+*.tsbuildinfo

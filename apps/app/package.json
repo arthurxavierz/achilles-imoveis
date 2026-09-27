@@ -1,0 +1,30 @@
+{
+  "name": "@imob/app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema de gestao da Achilles (app.achillesimoveis.com.br).",
+  "scripts": {
+    "predev": "node ../../scripts/sincronizar-assets.mjs",
+    "prebuild": "node ../../scripts/sincronizar-assets.mjs",
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@imob/core": "*",
+    "@imob/db": "*",
+    "@imob/demo": "*",
+    "@supabase/ssr": "^0.5.2",
+    "@supabase/supabase-js": "^2.47.10",
+    "next": "^15.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.7",
+    "@types/react-dom": "^19.0.3",
+    "typescript": "^5.6.3"
+  }
+}

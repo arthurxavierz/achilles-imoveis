@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <!--
+    Favicon. Fundo preto solido, simbolo em champanhe.
+
+    O traco e proporcionalmente mais grosso que o do simbolo solto: na
+    aba do navegador isto vira 16 pixels, e o contorno fino some.
+  -->
+  <rect width="512" height="512" rx="104" fill="#080807" />
+  <g transform="translate(118 104) scale(0.575)" stroke="#d4b27a" stroke-width="58" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 500 L240 24 L456 500" />
+    <path d="M186 404 V318 H294 V404 Z" />
+  </g>
+</svg>

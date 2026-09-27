@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 520" fill="none" role="img" aria-label="Achilles">
+  <!--
+    O "A" da Achilles, em traco aberto.
+
+    E uma letra e um telhado ao mesmo tempo: as duas pernas sao as aguas
+    do telhado, e a trave do A virou o peitoril de uma janela quadrada,
+    que e o que transforma a letra em casa sem desenhar uma casa.
+
+    Como no simbolo anterior, este arquivo entra quase sempre como
+    mascara CSS: quem pinta e o background do elemento, e o mesmo
+    desenho sai champanhe no site e branco no painel. A cor abaixo so
+    vale para quem usar o arquivo direto num <img>.
+
+    Nao troque por currentColor: SVG referenciado como imagem nao tem
+    contexto de cor, e a mascara recortaria o desenho inteiro.
+  -->
+  <g stroke="#d4b27a" stroke-width="34" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M24 500 L240 24 L456 500" />
+    <path d="M186 404 V318 H294 V404 Z" />
+  </g>
+</svg>

@@ -1,0 +1,71 @@
+# ============================================================
+# SITE PUBLICO - achillesimoveis.com.br
+# ============================================================
+# Este arquivo fica DENTRO de apps/site de proposito.
+#
+# No painel do Netlify, configure este site assim:
+#   Base directory     -> deixe VAZIO
+#   Publish directory  -> deixe VAZIO tambem
+#   Package directory  -> apps/site
+#
+# Com isso o npm install roda na raiz do repositorio (e enxerga os
+# workspaces @imob/core e @imob/db) enquanto a configuracao do site
+# vem daqui. Se voce apontar o Base directory para apps/site, o install
+# roda dentro da pasta, nao encontra os pacotes internos e o build quebra.
+#
+# A pasta de publicacao nao e declarada: o runtime de Next.js do Netlify
+# detecta sozinho e configura as funcoes de renderizacao no servidor.
+# ============================================================
+
+# A pasta de publicacao e declarada aqui, e o campo "Publish directory"
+# da interface do Netlify deve ficar VAZIO.
+#
+# Sao dois erros diferentes, e ja passamos pelos dois:
+#
+#   Campo preenchido com a pasta errada ->
+#     "Your publish directory does not contain expected Next.js build
+#      output". O valor da interface vence o deste arquivo
+#      (`publishOrigin: ui` no log), entao o build compila certo e o
+#      plugin procura o resultado no lugar errado.
+#
+#   Campo vazio E sem declaracao aqui ->
+#     "Your publish directory cannot be the same as the base directory".
+#     Sem ninguem dizer onde e, o Netlify assume a propria pasta do
+#     pacote, que e igual a base, e o plugin recusa.
+#
+#   Declarado como ".next" ->
+#     "Your publish directory was not found at /opt/build/repo/.next".
+#     O caminho e resolvido a partir da RAIZ do repositorio, nao desta
+#     pasta, mesmo com baseRelDir ligado nos flags do build.
+#
+# Com `publish` declarado abaixo e o campo da interface vazio, o log
+# passa a mostrar `publishOrigin: config` e o caminho certo.
+
+[build]
+  command = "npm run build:site"
+  # Caminho a partir da RAIZ do repositorio, e nao desta pasta.
+  # `publish = ".next"` resolveu para /opt/build/repo/.next e o plugin
+  # nao achou nada la, apesar do baseRelDir. O caminho completo e o
+  # unico que funciona com packagePath.
+  publish = "apps/site/.next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # O build do Next com os pacotes do monorepo passa do heap padrao
+  # do Node em maquinas menores. Reservar 4 GB evita a falha
+  # intermitente de alocacao durante a compilacao.
+  NODE_OPTIONS = "--max-old-space-size=4096"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# As fotos dos imoveis mudam pouco. Cache longo no CDN economiza banda
+# e deixa a listagem instantanea na segunda visita.
+[[headers]]
+  for = "/_next/image*"
+  [headers.values]
+    Cache-Control = "public, max-age=3600, stale-while-revalidate=86400"
